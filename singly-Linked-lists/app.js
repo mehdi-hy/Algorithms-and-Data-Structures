@@ -94,8 +94,8 @@ class SingleLinkedLIst {
     return true;
   }
   remove(val, index) {
-    if (index < 0 || index > this.length) return false;
-    if (index === this.length) return this.pop(val);
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === this.length - 1) return this.pop(val);
     if (index === 0) return this.shift(val);
     var prev = this.get(index - 1);
     var removed = prev.next;
