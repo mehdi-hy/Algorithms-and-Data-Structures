@@ -1,25 +1,34 @@
 class PriorityQueue {
   constructor() {
-    this.values = [41, 39, 33, 18, 27, 12];
+    this.values = [];
   }
   enqueue(val, priority) {
     let newNode = new Node(val, priority);
-    this.values.push(newNode);
-    this.bubbleUp();
-  }
-  bubbleUp() {
-    let idx = this.values.length - 1;
-    let element = this.values[idx];
-    while (idx > 0) {
-      let parentIdx = Math.floor((idx - 1) / 2);
-      let parent = this.values[parentIdx];
-      if (parent.priority >= element.priority) break;
-      [this.values[parentIdx], this.values[idx]] = [
-        this.values[idx],
-        this.values[parentIdx],
-      ];
-      idx = parentIdx;
+    if (this.values.length === 0) {
+      this.values.push(newNode);
+      return this.values;
     }
+
+    this.values.push(newNode);
+    let currentIdx = this.values.length - 1;
+    const bubbleUp = (currentIdx) => {
+      let current = this.values[currentIdx];
+      let parentIdx = Math.floor((currentIdx - 1) / 2);
+      if (parentIdx >= 0) {
+        console.log('hello');
+        let parent = this.values[parentIdx];
+        if (current.priority < parent.priority) {
+          [this.values[parentIdx], this.values[currentIdx]] = [
+            this.values[currentIdx],
+            this.values[parentIdx],
+          ];
+
+          bubbleUp(parentIdx);
+        }
+      }
+    };
+    bubbleUp(currentIdx);
+    return this.values;
   }
   dequeue() {
     const min = this.values[0];
@@ -75,5 +84,22 @@ ER.enqueue('common cold', 5);
 ER.enqueue('gunshot wound', 1);
 ER.enqueue('high fever', 4);
 ER.enqueue('broken arm', 2);
-ER.enqueue('glass in foot', 3);
-console.log(ER.dequeue());
+console.log(ER.enqueue('glass in foot', 3));
+
+//  let newNode = new Node(val, priority);
+//     this.values.push(newNode);
+//     this.bubbleUp();
+//   }
+//   bubbleUp() {
+//     let idx = this.values.length - 1;
+//     let element = this.values[idx];
+//     while (idx > 0) {
+//       let parentIdx = Math.floor((idx - 1) / 2);
+//       let parent = this.values[parentIdx];
+//       if (parent.priority >= element.priority) break;
+//       [this.values[parentIdx], this.values[idx]] = [
+//         this.values[idx],
+//         this.values[parentIdx],
+//       ];
+//       idx = parentIdx;
+//     }
